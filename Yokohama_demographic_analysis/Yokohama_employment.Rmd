@@ -29,19 +29,29 @@ for (p in packages){
 yokohama_employment<-read_csv("/Users/koichiito/Documents/NUS/Academic Matter/2020 Fall/DEP5103 Urban and Regional Planning/Studio/Data/rodo-kyujin.csv")
 ```
 
+
+
 # vizualize
 ```{r}
 p1<-ggplot()
 p1+geom_line(data=yokohama_employment,aes(x=`年度（西暦）`,
-                                          y=`月間有効求職者数（年度計）［人］`),
-             colour="blue", alpha=0.8)+
-  geom_line(data=yokohama_employment,aes(x=`年度（西暦）`,y=`月間有効求人数（年度計）［人］` ),
-            colour="red", alpha=0.8)+
+                                          y=`月間有効求職者数（年度計）［人］`,
+                                          colour="blue"), alpha=0.8)+
+  geom_line(data=yokohama_employment,aes(x=`年度（西暦）`,
+                                         y=`月間有効求人数（年度計）［人］`,
+                                         colour="red"), alpha=0.8)+
   geom_vline(xintercept=2000,
-              linetype=4, colour="black",
-           show.legend = TRUE)+
+            linetype=4, colour="black",
+            show.legend = TRUE)+
+  scale_color_identity(name = "Employment",
+                       breaks = c("blue","red"),
+                       labels = c("People who are looking for jobs", "Available jobs"),
+                       guide = "legend")+
   theme_minimal()+
-  theme(panel.grid = element_blank())+
+  theme(
+    panel.grid = element_blank(),
+    legend.position = "top",
+    legend.direction = "horizontal")+
   theme_set(theme_bw(base_family = "HiraKakuProN-W3"))+
   guides(fill = guide_legend(reverse = TRUE))+
   scale_y_continuous(labels = comma)+
