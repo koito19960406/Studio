@@ -6,4 +6,4 @@ Following contents are included:
 1. Yokohama's demographic analysis
 2. Changes in tourists
 
-![alt text](ChangeinPopulation.png "Logo Title Text 1")
+![Change in the Population](Studio/Yokohama_demographic_analysis/ChangeinPopulation.png "Logo Title Text 1")
