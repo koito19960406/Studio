@@ -110,8 +110,8 @@ Districts_far_from_site<-Kanagawa_Age_Population %>%
 
 ```{r}
 p1<-ggplot()
-p1+geom_line(data=Districts_far_from_site,aes(x=Year,y=total,group=District_en),colour="grey", alpha=0.3)+
-  geom_line(data=Districts_near_site,aes(x=Year,y=total,colour=District_en))+
+p1+geom_line(data=Districts_far_from_site,aes(x=Year,y=total,group=District_en),colour="grey", alpha=0.5)+
+  geom_line(data=Districts_near_site,aes(x=Year,y=total,colour=District_en),size=1)+
   geom_vline(xintercept=2000,
                 linetype=4, colour="black",
              show.legend = TRUE)+
