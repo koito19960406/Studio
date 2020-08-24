@@ -63,6 +63,35 @@ for population, lets replace NA with 0
 ```{r}
 Kanagawa_Age_Population$Population[is.na(Kanagawa_Age_Population$Population)] <- 0
 ```
+
+Lets recode district names to English
+```{r}
+unique(Kanagawa_Age_Population$District)
+```
+```{r}
+Kanagawa_Age_Population$District_en <- recode_factor(Kanagawa_Age_Population$District,
+              '鶴見区' = 'Tsurumi District',
+              '神奈川区' = 'Kanagwa District',
+              '西区' = 'Nishi District',
+              '中区' = 'Naka District',
+              '南区' = 'Minami District',
+              '港南区' = 'Konan District',
+              '保土ケ谷区' = 'Hodograya Disctrict',
+              '旭区' = 'Asahi District',
+              '磯子区' = 'Isogo District',
+              '金沢区' = 'Kanazawa District',
+              '港北区' = 'Kohoku District',
+              '緑区' = 'Midori District',
+              '青葉区' = 'Aoba District',
+              '都筑区' = 'Tsuduki District',
+              '戸塚区' = 'Tozuka District',
+              '栄区' = 'Sakae District',
+              '泉区' = 'Izumi District',
+              '瀬谷区' = 'Seya District'
+              )
+```
+
+
 Seems good!
 
 # Visualization
@@ -70,19 +99,19 @@ Seems good!
 ```{r}
 Districts_near_site<-Kanagawa_Age_Population %>% 
   filter(District=='神奈川区'|District=='西区'|District=='中区') %>% 
-  group_by(District,Year) %>% 
+  group_by(District_en,Year) %>% 
   summarise(total=sum(Population))
 
 Districts_far_from_site<-Kanagawa_Age_Population %>% 
   filter(!(District=='神奈川区'|District=='西区'|District=='中区')) %>% 
-  group_by(District,Year) %>% 
+  group_by(District_en,Year) %>% 
   summarise(total=sum(Population))
 ```
 
 ```{r}
 p1<-ggplot()
-p1+geom_line(data=Districts_far_from_site,aes(x=Year,y=total,group=District),colour="grey", alpha=0.3)+
-  geom_line(data=Districts_near_site,aes(x=Year,y=total,colour=District))+
+p1+geom_line(data=Districts_far_from_site,aes(x=Year,y=total,group=District_en),colour="grey", alpha=0.3)+
+  geom_line(data=Districts_near_site,aes(x=Year,y=total,colour=District_en))+
   geom_vline(xintercept=2000,
                 linetype=4, colour="black",
              show.legend = TRUE)+
@@ -147,6 +176,33 @@ Kanagawa_Age_Population %>%
   summarise(AG_district_share=sum(share))
 ```
 
+let's 3 years for whole Yokohama
+```{r}
+Kanagawa_Age_Population %>%
+  group_by(District,Year) %>%
+  mutate(district_total = sum(Population)) %>% 
+  mutate(share=100*Population/district_total) %>%
+  group_by(District, Year, Age_Mean) %>%
+  summarise(AG_district_share=sum(share)) %>% 
+  filter(((Year==1990)|(Year==2000)|(Year==2010))) %>% 
+  ggplot(data=., mapping=aes(x=Age_Mean, y=Year, fill=AG_district_share))+
+  geom_tile(colour="white", size=.2) +
+  labs(
+    x="Age groups",
+    y="",
+    title="Age composition in Yokohama 1990-2010",
+    fill = "Share of age group",
+    caption="Data: Yokohama City"
+    ) +
+  theme(legend.position='bottom',
+        panel.grid=element_blank(),
+        legend.key.width = unit(4,"line"),
+        legend.key.height = unit(.6,"line")
+        ) +
+  scale_fill_viridis(discrete=FALSE, option="B", labels = comma)
+
+ggsave("Age_Heatmap_Yokohama.png",dpi=400)
+```
 
 
 let's 3 years for Kanagawa District
@@ -231,7 +287,6 @@ Kanagawa_Age_Population %>%
 
 ggsave("Age_Heatmap_Naka_District.png",dpi=400)
 ```
-
 
 
 
