@@ -177,6 +177,7 @@ Kanagawa_Age_Population %>%
 ```
 
 let's 3 years for whole Yokohama
+
 ```{r}
 Kanagawa_Age_Population %>%
   group_by(District,Year) %>%

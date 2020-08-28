@@ -1,0 +1,112 @@
+---
+title: "Singapore Demogaphy"
+author: "Koichi"
+date: "8/28/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# load packages
+```{r}
+packages = c('tidyverse','scales','ggalt','svglite','viridis','forcats','reshape')
+
+#Loop through the above list, and check if the package is installed locally.
+# Code goes in here!
+
+for (p in packages){
+  if(!require(p,character.only = T)){
+    install.packages(p)
+  }
+  library(p,character.only = T)
+}
+```
+
+
+# load data
+```{r}
+from2000to2010<- read_csv("/Users/koichiito/Documents/NUS/Academic Matter/2020 Fall/DEP5103 Urban and Regional Planning/Studio/Data/respopagesextod2000to2010.csv")
+from2010to2019<- read_csv("/Users/koichiito/Documents/NUS/Academic Matter/2020 Fall/DEP5103 Urban and Regional Planning/Studio/Data/respopagesextod2011to2019.csv")
+```
+# combine data
+```{r}
+sgpop<-bind_rows(from2000to2010,from2010to2019)
+```
+
+# feature engineering
+```{r}
+sgpop$AG<-recode(sgpop$AG,
+              "5_to_9"="05_to_09",
+              "0_to_4"="00_to_04")
+```
+
+```{r}
+sgpop$AG_mid <- recode(sgpop$AG,
+'00_to_04' = 2.5,
+'05_to_09' = 7.5,
+'10_to_14' = 12.5,
+'15_to_19' = 17.5,
+'20_to_24' = 22.5,
+'25_to_29' = 27.5,
+'30_to_34' = 32.5,
+'35_to_39' = 37.5,
+'40_to_44' = 42.5,
+'45_to_49' = 47.5,
+'50_to_54' = 52.5,
+'55_to_59' = 57.5,
+'60_to_64' = 62.5,
+'65_to_69' = 67.5,
+'70_to_74' = 72.5,
+'75_to_79' = 77.5,
+'80_to_84' = 82.5,
+'85_to_89' = 87.5,
+'90_and_over' = 92.5
+)
+```
+
+# visualize the data
+## let's do singapore as a whole
+```{r}
+sgpop %>%
+  group_by(SZ, Time) %>%
+  mutate(SZ_total = sum(Pop)) %>% 
+  mutate(share=100*Pop/SZ_total) %>%
+  group_by(SZ, Time, AG_mid) %>%
+  summarise(AG_SZ_share=sum(share)) %>% 
+  filter(((Time==2004)|(Time==2009)|(Time==2014)|(Time==2019))) %>% 
+  
+```
+
+
+
+```{r}
+
+p <- ggplot(data=age_groups_SZ, mapping=aes(x=AG_mid, y=SZ, fill=AG_SZ_share))
+p + geom_tile(colour="white", size=.2) +
+  labs(
+    x="Age groups",
+    y="",
+    title="Planning areas in Singapore have different demographics",
+    fill = "Share of age group",
+    caption="Data: Singapore Department of Statistics, 2020."
+    ) +
+  theme(legend.position='bottom',
+        panel.grid=element_blank(),
+        legend.key.width = unit(4,"line"),
+        legend.key.height = unit(.6,"line")
+        ) +
+  scale_fill_viridis(discrete=FALSE, option="B", labels = comma)
+```
+
+
+
+
+
+
+
+
+
+
+
