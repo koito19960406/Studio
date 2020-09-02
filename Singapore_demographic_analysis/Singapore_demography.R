@@ -1,20 +1,5 @@
----
-title: "Singapore Demogaphy"
-author: "Koichi"
-date: "8/28/2020"
-output: html_document
----
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
-
 # load packages
-```{r}
 packages = c('tidyverse','scales','ggalt','svglite','viridis','forcats','reshape')
-
-#Loop through the above list, and check if the package is installed locally.
-# Code goes in here!
 
 for (p in packages){
   if(!require(p,character.only = T)){
@@ -22,53 +7,45 @@ for (p in packages){
   }
   library(p,character.only = T)
 }
-```
-
 
 # load data
-```{r}
 from2000to2010<- read_csv("/Users/koichiito/Documents/NUS/Academic Matter/2020 Fall/DEP5103 Urban and Regional Planning/Studio/Data/respopagesextod2000to2010.csv")
 from2010to2019<- read_csv("/Users/koichiito/Documents/NUS/Academic Matter/2020 Fall/DEP5103 Urban and Regional Planning/Studio/Data/respopagesextod2011to2019.csv")
-```
+
 # combine data
-```{r}
 sgpop<-bind_rows(from2000to2010,from2010to2019)
-```
+
 
 # feature engineering
-```{r}
 sgpop$AG<-recode(sgpop$AG,
-              "5_to_9"="05_to_09",
-              "0_to_4"="00_to_04")
-```
+                 "5_to_9"="05_to_09",
+                 "0_to_4"="00_to_04")
 
-```{r}
 sgpop$AG_mid <- recode(sgpop$AG,
-'00_to_04' = 2.5,
-'05_to_09' = 7.5,
-'10_to_14' = 12.5,
-'15_to_19' = 17.5,
-'20_to_24' = 22.5,
-'25_to_29' = 27.5,
-'30_to_34' = 32.5,
-'35_to_39' = 37.5,
-'40_to_44' = 42.5,
-'45_to_49' = 47.5,
-'50_to_54' = 52.5,
-'55_to_59' = 57.5,
-'60_to_64' = 62.5,
-'65_to_69' = 67.5,
-'70_to_74' = 72.5,
-'75_to_79' = 77.5,
-'80_to_84' = 82.5,
-'85_to_89' = 87.5,
-'90_and_over' = 92.5
+                       '00_to_04' = 2.5,
+                       '05_to_09' = 7.5,
+                       '10_to_14' = 12.5,
+                       '15_to_19' = 17.5,
+                       '20_to_24' = 22.5,
+                       '25_to_29' = 27.5,
+                       '30_to_34' = 32.5,
+                       '35_to_39' = 37.5,
+                       '40_to_44' = 42.5,
+                       '45_to_49' = 47.5,
+                       '50_to_54' = 52.5,
+                       '55_to_59' = 57.5,
+                       '60_to_64' = 62.5,
+                       '65_to_69' = 67.5,
+                       '70_to_74' = 72.5,
+                       '75_to_79' = 77.5,
+                       '80_to_84' = 82.5,
+                       '85_to_89' = 87.5,
+                       '90_and_over' = 92.5
 )
-```
+
 
 # visualize the data
 ## let's do singapore as a whole
-```{r}
 sgpop %>%
   group_by(Time) %>%
   mutate(total = sum(Pop)) %>% 
@@ -84,21 +61,17 @@ sgpop %>%
     title="Age composition in Singapore 2000-2019",
     fill = "Share of age group",
     caption="Data: Singapore Government, 2020"
-    ) +
+  ) +
   theme(legend.position='bottom',
         panel.grid=element_blank(),
         legend.key.width = unit(4,"line"),
         legend.key.height = unit(.6,"line")
-        ) +
+  ) +
   scale_fill_viridis(discrete=FALSE, option="B", labels = comma)
 
 ggsave("Age_Heatmap_Singapore.png",dpi=400)
 
-  
-```
-
 ## let's do central region
-```{r}
 central_region<-c('Queenstown',
                   'Bukit Timah',
                   'Novena','Bishan',
@@ -118,7 +91,7 @@ central_region<-c('Queenstown',
                   'Outram',
                   'River Valley',
                   'Singapore River'
-                  )
+)
 
 sgpop %>%
   filter(PA %in% central_region) %>%
@@ -135,19 +108,17 @@ sgpop %>%
     title="Age composition in Central Region 2000-2019",
     fill = "Share of age group",
     caption="Data: Singapore Government, 2020"
-    ) +
+  ) +
   theme(legend.position='bottom',
         panel.grid=element_blank(),
         legend.key.width = unit(4,"line"),
         legend.key.height = unit(.6,"line")
-        ) +
+  ) +
   scale_fill_viridis(discrete=FALSE, option="B", labels = comma)
 
 ggsave("Age_Heatmap_Central_Region.png",dpi=400)
-```
 
 ## let's do Bukit Merah
-```{r}
 sgpop %>%
   filter(PA == 'Bukit Merah') %>%
   group_by(Time) %>%
@@ -163,18 +134,17 @@ sgpop %>%
     title="Age composition in Bukit Merah Planning Area 2000-2019",
     fill = "Share of age group",
     caption="Data: Singapore Government, 2020"
-    ) +
+  ) +
   theme(legend.position='bottom',
         panel.grid=element_blank(),
         legend.key.width = unit(4,"line"),
         legend.key.height = unit(.6,"line")
-        ) +
+  ) +
   scale_fill_viridis(discrete=FALSE, option="B", labels = comma)
 
 ggsave("Age_Heatmap_Bukit_Merah.png",dpi=400)
-```
+
 ## let's do central region
-```{r}
 sgpop %>%
   filter(SZ=='Maritime Square') %>%
   group_by(Time) %>%
@@ -190,25 +160,12 @@ sgpop %>%
     title="Age composition in Maritime Square Subzone 2000-2019",
     fill = "Share of age group",
     caption="Data: Singapore Government, 2020"
-    ) +
+  ) +
   theme(legend.position='bottom',
         panel.grid=element_blank(),
         legend.key.width = unit(4,"line"),
         legend.key.height = unit(.6,"line")
-        ) +
+  ) +
   scale_fill_viridis(discrete=FALSE, option="B", labels = comma)
 
 ggsave("Age_Heatmap_Maritime_Square.png",dpi=400)
-```
-
-
-
-
-
-
-
-
-
-
-
-
