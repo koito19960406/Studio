@@ -23,5 +23,7 @@ Following contents are included:
   I visualized the changes in Singapore's population. You can see that the population is aging. 
   ![Changes in Singapore's Population](Singapore_demographic_analysis/image/Age_Heatmap_Singapore.png)
   
-  I also conducted social media analysis by scraping data from Flickr to see where people like to visit. I examined locations of photos with certain tags.
+  I also conducted social media analysis by scraping data from Flickr to see where people like to visit. I examined locations of photos with certain tags to find that people only visit CBD area for waterfront although Singapore is an island. The difference is clear when compared with a map of the 'Nature' tag. 
   ![Distribution of Photos with the 'Nature' Tag](Singapore_demographic_analysis/image/Flickr_nature.png)
+  ![Distribution of Photos with the 'Waterfront' Tag](Singapore_demographic_analysis/image/Flickr_waterfront.png)
+  
