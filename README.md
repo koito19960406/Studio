@@ -1,16 +1,15 @@
 # Studio
 
 This repo includes my work done for studio.
-My aim was to analyze the influence of Minatomirai's waterfront development on the demography through simple visualization.
+My aim was to analyze the influence of Minatomirai's waterfront development on the demography through simple visualization as a case study for our project in Singapore. 
 
 Following contents are included:
 1. Yokohama's demographic analysis
-2. Changes in tourists
-3. Changes in employment
+2. Singapore's demographic analysis
 
 # 1. Yokohama's demographic analysis
   I visualized the changes in the population in the three districts near Minatomirai. You can see that population increased after 2000, when waterfront development started. 
-![Change in the Population](Yokohama_demographic_analysis/ChangeinPopulation.png "Logo Title Text 1")
+![Change in Yokohama's Population](Yokohama_demographic_analysis/ChangeinPopulation.png "Logo Title Text 1")
   
   I also visualized age group composition in Yokohama and the three districts. You can see the population generally aging in Yokohama city.
   ![Age Group Composition in Yokohama](Yokohama_demographic_analysis/Age_Heatmap_Yokohama.png)
@@ -20,11 +19,9 @@ Following contents are included:
   ![Age Group Composition in Naka district](Yokohama_demographic_analysis/Age_Heatmap_Naka_District.png)
   ![Age Group Composition in Nishi district](Yokohama_demographic_analysis/Age_Heatmap_Nishi_District.png)
   
-# 2. Changes in tourists
- Tourists had been increasing even before the waterfront development, so it is not clear whether the development helped the tourism
- ![Age Group Composition in Nishi district](Yokohama_demographic_analysis/ChangeinTourists.png)
- 
-# 3. Changes in employment
- After the development, more jobs became available.
- ![Demand and Supply of Employment in Yokohama](Yokohama_demographic_analysis/ChangeinEmployment.png)
+# 2. Singapore's demographic analysis
+  I visualized the changes in Singapore's population. You can see that the population is aging. 
+  ![Changes in Singapore's Population](Singapore_demographic_analysis/image/Age_Heatmap_Singapore.png)
   
+  I also conducted social media analysis by scraping data from Flickr to see where people like to visit. I examined locations of photos with certain tags.
+  ![Distribution of Photos with the 'Nature' Tag](Singapore_demographic_analysis/image/Flickr_nature.png)
