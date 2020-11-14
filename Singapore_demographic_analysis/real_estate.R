@@ -31,7 +31,11 @@ hdb<-read_csv("Data/resale-flat-prices-based-on-registration-date-from-jan-2017-
 hdb<-hdb %>% 
   filter(grepl('2020', month))
 hdb<-hdb %>% 
-  mutate(unit_price=resale_price/floor_area_sqm)
+  mutate(unit_price=resale_price/floor_area_sqm,
+         full_address=paste(block,street_name, "Singapore", sep=" ")
+         )
+
+
 
 write.csv(hdb,'Data/hdb_2020.csv')
 
